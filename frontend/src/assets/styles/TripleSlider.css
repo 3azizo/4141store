@@ -1,0 +1,28 @@
+
+
+.hero-slider { 
+  width: 100%;
+}
+
+.mySwiper {
+  width: 80%;
+  max-width: 1200px;
+  border-radius: 16px;
+  margin: auto;
+}
+
+.slide-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+@media (max-width: 767.98px) {
+.mySwiper {
+    width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+}
+
+
