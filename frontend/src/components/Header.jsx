@@ -50,12 +50,19 @@ const Header = () => {
 
               <NavDropdown title='الاقسام' id='category'> 
                 {Object.keys(subCategoriseList).map((category) => (
-                  <NavDropdown title={category} key={category} className='category-menu'>
+                  <NavDropdown
+                    title={category}
+                    key={category}
+                    className='category-menu custom-dropdown fade-slide-dropdown'
+                    aria-label={`قسم ${category}`}
+                  >
                     {subCategoriseList[category].map((subCategory) => (
-                      <NavDropdown.Item 
-                        as={Link} 
-                        key={subCategory} 
+                      <NavDropdown.Item
+                        as={Link}
+                        key={subCategory}
                         to={`/categories/${category}/${subCategory}`}
+                        className='dropdown-item-custom'
+                        aria-label={`منتجات ${subCategory}`}
                       >
                         {subCategory}
                       </NavDropdown.Item>

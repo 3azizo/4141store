@@ -25,10 +25,13 @@ body {
   background: linear-gradient(90deg, var(--main-color), var(--alt-main));
   border: none !important;
   color: #fff;
+  transition: background 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(30,58,138,0.08);
 }
 
 .btn-primary:hover {
   background: linear-gradient(90deg, var(--alt-main), var(--main-color));
+  box-shadow: 0 4px 16px rgba(30,58,138,0.16);
 }
 
 .navbar-nav, .dropdown-menu {
@@ -77,8 +80,17 @@ main {
   border-radius: 0.5rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   text-align: right; 
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: dropdownFade 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
 }
 
+@keyframes dropdownFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .navbar-nav .dropdown-item {
   color: #f8f9fa; 
   padding: 0.75rem 1.25rem; 
@@ -135,7 +147,7 @@ main {
   text-align: right; 
   direction: rtl;   
   color: var(--dark-blue-color);
-  transition: all 0.3s ease-in-out; 
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
   width: 180px; 
   flex-grow: 1; 
 }
@@ -155,7 +167,7 @@ main {
   padding: 0.5rem 1rem; 
   font-weight: 600; 
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
   margin-left: 8px; 
   white-space: nowrap; 
 }
@@ -247,7 +259,7 @@ table th {
   color: inherit; 
 }
 .category-card {
-   background-color: #fff;
+  /* background-color: #fff; */
   border: 1px solid var(--alt-main);
   color:var(--dark-blue-color);
   border-radius: 12px;
@@ -257,14 +269,14 @@ table th {
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: all 0.3s ease-in-out; /* حركة سلسة عند التفاعل */
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1) !important;
   height: 100%;
+
 }
 
 .category-card:hover {
-  transform: translateY(-8px); /* رفع الكارت قليلاً عند التحويم */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* ظل أكبر وأكثر وضوحًا */
-  border-color: var(--alt-main); /* حدود بلون مميز عند التحويم */
+  transform: translateY(-8px) !important; 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important; 
 }
 
 /* --- الأيقونات داخل الكارت --- */
@@ -327,8 +339,82 @@ h1 {
   font-weight: 600;
   color: var(--dark-blue-color)
 }
-.porduct-card{
+.porduct-card {
   background-color: var(--bg-color);
+}
+
+.product-card-custom {
+  box-shadow: 0 4px 24px rgba(30, 58, 138, 0.10);
+  transition: box-shadow 0.3s, transform 0.3s;
+  border: 1px solid var(--light-theme-color);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product-card-custom:hover {
+  box-shadow: 0 8px 32px rgba(30, 58, 138, 0.18);
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--main-color);
+}
+.product-card-img-link {
+  display: block;
+  margin-bottom: 1rem;
+}
+.product-card-body {
+  padding: 0.5rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.product-title-link {
+  text-decoration: none;
+}
+.product-title {
+  font-size: 1.15rem;
+  color: var(--dark-blue-color);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.product-card-rating {
+  margin: 0.25rem 0 0.5rem 0;
+  text-align: center;
+}
+.product-card-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--main-color);
+  margin-top: 0.5rem;
+}
+.price-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+.price-currency {
+  font-size: 1rem;
+  color: var(--alt-main);
+  font-weight: 500;
+}
+
+@media (max-width: 767.98px) {
+  .product-card-custom {
+    min-height: 340px;
+    padding: 1rem 0.5rem;
+  }
+  .product-card-img {
+    height: 180px;
+  }
+  .product-title {
+    font-size: 1rem;
+  }
+  .product-card-price {
+    font-size: 1.1rem;
+  }
 }
 .card-title {
   font-size: 1.1rem;
