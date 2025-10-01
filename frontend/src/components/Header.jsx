@@ -7,6 +7,7 @@ import { logout } from '../slices/authSlice';
 import SearchBox from './SearchBox'; // Assuming SearchBox handles its own RTL styling
 import logo from '../assets/logo.png';
 import { resetCart } from '../slices/cartSlice';
+import { subCategoriseList } from '../constants';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -33,7 +34,7 @@ const Header = () => {
       <Navbar expand='lg' className='header-bg-dark' collapseOnSelect>
         <Container>
           <Navbar.Brand as={Link} to='/'>
-            <img src={logo} alt='Formal Suits' className='logo' />
+            <img src={logo} alt='Logo' className='logo' />
           </Navbar.Brand>
 
           {/* Toggle button, ensure it's on the left for RTL consistency */}
@@ -47,26 +48,21 @@ const Header = () => {
               {/* Search Box before other links for prominence, adjust order as needed */}
               <SearchBox />
 
-              {/* Navigation items in logical order for Arabic users */}
-              <NavDropdown title='الاقسام' id='category' alignRight> {/* alignRight for RTL dropdown */}
-        
-                <NavDropdown.Item as={Link} to='/categories/رجالى'>
-                  رجالى
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/categories/نسائى'>
-                  نسائى
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/categories/اطفال'>
-                  اطفال
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/categories/ادوات رياضية'>
-                  ادوات رياضية
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/categories/احذية'>
-                  احذية
-                </NavDropdown.Item>
+              <NavDropdown title='الاقسام' id='category'> 
+                {Object.keys(subCategoriseList).map((category) => (
+                  <NavDropdown title={category} key={category} className='category-menu'>
+                    {subCategoriseList[category].map((subCategory) => (
+                      <NavDropdown.Item 
+                        as={Link} 
+                        key={subCategory} 
+                        to={`/categories/${category}/${subCategory}`}
+                      >
+                        {subCategory}
+                      </NavDropdown.Item>
+                    ))}
+                  </NavDropdown>
+                ))}
               </NavDropdown>
-
               <Nav.Link as={Link} to='/cart'>
                 المشتريات <FaShoppingCart /> {/* Icon after text for RTL */}
                 {cartItems.length > 0 && (
@@ -77,7 +73,7 @@ const Header = () => {
               </Nav.Link>
 
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username' alignRight>
+                <NavDropdown title={userInfo.name} id='username' >
                   <NavDropdown.Item as={Link} to='/profile'>
                     الملف الشخصى
                   </NavDropdown.Item>
@@ -93,7 +89,7 @@ const Header = () => {
 
               {/* Admin Links */}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu' alignRight>
+                <NavDropdown title='Admin' id='adminmenu' >
                   <NavDropdown.Item as={Link} to='/admin/productlist'>
                     منتجات
                   </NavDropdown.Item>

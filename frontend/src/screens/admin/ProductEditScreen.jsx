@@ -10,15 +10,16 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
+import { subCategoriseList } from '../../constants';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
 
@@ -42,8 +43,6 @@ const ProductEditScreen = () => {
       toast.error('يرجى رفع صورة للمنتج.');
       return;
     }
-    console.log('إرسال المنتج مع الصورة:', image); // ✅ طباعة الرابط للتحقق
-
     try {
       await updateProduct({
         productId,
@@ -52,6 +51,7 @@ const ProductEditScreen = () => {
         image,
         brand,
         category,
+        subCategory,
         description,
         countInStock,
       }).unwrap();
@@ -70,6 +70,7 @@ const ProductEditScreen = () => {
       setImage(product.image);
       setBrand(product.brand);
       setCategory(product.category);
+      setSubCategory(product.subCategory||" ")
       setCountInStock(product.countInStock);
       setDescription(product.description);
     }
@@ -86,10 +87,8 @@ const ProductEditScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
-  
 
   
-
   return (
     <>
       <Link to='/admin/productlist' className='btn btn-light my-3'>
@@ -165,12 +164,30 @@ const ProductEditScreen = () => {
                 <option value='رجالى'>رجالى</option>
                 <option value='نسائى'>نسائى</option>
                 <option value='اطفال'>اطفال</option>
-                <option value='ادوات رياضية'>ادوات رياضية</option>
-                <option value='احذية'>احذية</option>
-
-                          
+                <option value='احذية'>احذية</option> 
+                <option value='حراس المرمى'> حراس المرمى</option>
+                <option value='ادوات رياضية'>ادوات رياضية</option> 
               </Form.Select>
             </Form.Group>
+            <Form.Group controlId='subcategory'>
+              <Form.Label>الفئة الفرعية</Form.Label>
+              {category && subCategoriseList[category] ? (
+                <Form.Select 
+                  value={subCategory || ''}   // ✅ ضمان إن القيمة مش undefined
+                  onChange={(e) => setSubCategory(e.target.value)}
+                >
+                  <option value=''>اختر الفئة الفرعية</option> 
+                  {subCategoriseList[category].map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </Form.Select>
+              ) : (
+                <span>اختار الفئة الرئيسية أولاً</span>
+              )}
+            </Form.Group>
+
 
 
             <Form.Group controlId='description'>

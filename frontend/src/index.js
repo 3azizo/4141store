@@ -68,12 +68,10 @@ const router = createBrowserRouter(
         <Route path='/admin/userlist' element={<UserListScreen />} />
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen />} />
         <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
-
       </Route>
-      {/*  */}
       <Route  path='/categories' element={<CategoryScreen/>}>
       <Route path='/categories/:category' element={<CategoryScreen />} />
-
+      <Route path='/categories/:category/:subCategory' element={<CategoryScreen />} />
       </Route>
     </Route>
   )

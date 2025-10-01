@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FaFacebook, FaWhatsapp } from 'react-icons/fa';
-import instapay from "../../assets/instapay.png"; // استبدل هذا بمسار الصورة الصحيح
+// import instapay from "../../assets/instapay.png"; // استبدل هذا بمسار الصورة الصحيح
 import map from "../../assets/map.png"; // استبدل هذا بمسار الصورة الصحيح
 import { SiVodafone } from 'react-icons/si'; // بديل رمزي لفودافون كاش
 
@@ -12,7 +12,7 @@ const ContactLinks = () => {
   return (
     <div className="contact-links">
       <a
-        href="https://www.facebook.com/Baya3storeBS/?locale=ar_AR"
+        href="3"
         target="_blank"
         rel="noopener noreferrer"
         className="contact-icon facebook"

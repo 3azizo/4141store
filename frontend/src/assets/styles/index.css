@@ -355,3 +355,12 @@ h1 {
   max-height: 500px; /* تحدد أقصى ارتفاع مناسب */
   object-fit: contain
 }
+/* */
+.dropdown-menu .category-menu .dropdown-menu{
+  right: 160px;
+  top: 0;
+}
+.dropdown-menu .category-menu a{
+  color: #fff !important;
+  padding: 10px;
+}

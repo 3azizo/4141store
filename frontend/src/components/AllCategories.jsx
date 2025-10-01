@@ -1,20 +1,7 @@
-import React from 'react';
-import shose from "../assets/categoriesIcon/football-shoes.png";
-import sport from "../assets/categoriesIcon/golf-gloves.png";
-import kids from "../assets/categoriesIcon/karate.png";
-import man from "../assets/categoriesIcon/sport.png";
-import woman from "../assets/categoriesIcon/sport-clothes.png";
+
 import { Link } from 'react-router-dom';
 
-const AllCategories = () => {
-  const categories = [
-    { name: 'رجالى', icon: man, path: '/categories/رجالى' },
-    { name: 'نسائى', icon: woman, path: '/categories/نسائى' },
-    { name: 'اطفال', icon: kids, path: '/categories/اطفال' },
-    { name: 'ادوات رياضية', icon: sport, path: '/categories/ادوات رياضية' },
-    { name: 'احذية', icon: shose, path: '/categories/احذية' },
-    
-  ];
+const AllCategories = ({categories}) => {
 
   return (
     <div className="container text-center mt-5 mb-5"> 

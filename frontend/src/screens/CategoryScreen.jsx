@@ -1,104 +1,112 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-import {  useParams } from 'react-router-dom';
-
-
+import { useParams } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { subCategoriseListDetails } from '../constants'; 
+import AllCategories from '../components/AllCategories';
 
 const CategoryScreen = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const { category } = useParams();
-    console.log(category,"cdfs");
-    
+  const { category, subCategory } = useParams();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const { data } = await axios.get('/api/products');
-                console.log('Products Data:',Object.keys(data),data ); // تحقق من البيانات
-                setProducts(data.products); // افترض أن `data` مصفوفة
-            } catch (err) {
-                setError(
-                    err.response && err.response.data.message
-                        ? err.response.data.message
-                        : 'An error occurred'
-                );
-            } finally {
-                setLoading(false);
-            }
-        };
-        
-        fetchProducts();
-    }, []);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get('/api/products');
+        setProducts(data.products || []);
+      } catch (err) {
+        setError(
+          err.response?.data?.message || 'An error occurred while fetching products'
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // تصنيف المنتجات حسب الأقسام
-    const categories = {};
-    if (Array.isArray(products)) {
-        products.forEach((product) => {
-            if (!categories[product.category]) {
-                categories[product.category] = [];
-            }
-            categories[product.category].push(product);
-        });
-        // console.log(categories,"from if");
-        
-    }
-    console.log(category===null,category==="");
-    
-    if(category===null||category===""||category===undefined){
-        return ( 
-            <div>
-                <h1>Categories</h1>
-                {loading ? (
-                    <Loader />
-                ) : error ? (
-                    <Message variant='danger'>{error}</Message>
-                ) : (
-                    Object.keys(categories).map((category) => {
-                        // console.log(category);
-                        
-                        return <div key={category}>
-                        <h2>{category}</h2>
-                            <Row>
-                            {categories[category].map((product) => (
-                                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                <Product product={product} />
-                                </Col>
-                            ))}
-                        </Row>
-                        </div>
-                    }
-                        
-                    )
-                )}
-            </div>
-            );
-    }else{
-      return  <div>
-            <h1>{category}</h1>
-            {categories[category]!==undefined?
-                       <Row>
-                       {categories[category].map((product) => (
-                           <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                           <Product product={product} />
-                           </Col>
-                       ))}
-                   </Row>
-            :<h4>{loading?"تشرفونا في المحل":`لا يتوفر ${category} حاليا `}</h4>}
-            
+    fetchProducts();
+  }, []);
 
-        </div>
-    }
+  // تصنيف المنتجات
+  const categories = {};
+  const subCategoriesProduct = [];
 
+  if (Array.isArray(products)) {
+    products.forEach((product) => {
+      if (!categories[product.category]) {
+        categories[product.category] = [];
+      }
 
+      categories[product.category].push(product);
+
+      if (subCategory && product.subCategory === subCategory) {
+        subCategoriesProduct.push(product);
+      }
+    });
+  }
+
+  // دالة لإظهار المنتجات
+  const renderProducts = (list) => (
+    <Row>
+      {list.map((product) => (
+        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+          <Product product={product} />
+        </Col>
+      ))}
+    </Row>
+  );
+
+  // 🚀 Loading / Error
+  if (loading) return <Loader />;
+  if (error) return <Message variant="danger">{error}</Message>;
+
+  // 🚀 SubCategory
+  if (subCategory) {
+    return (
+      <div>
+        <h1>{subCategory}</h1>
+        {subCategoriesProduct.length > 0 ? (
+          renderProducts(subCategoriesProduct)
+        ) : (
+          <h4>لا يتوفر {subCategory} حاليا</h4>
+        )}
+      </div>
+    );
+  }
+
+  // 🚀 No category selected → show all
+  if (!category) {
+    return (
+      <div>
+        <h1>Categories</h1>
+        {Object.keys(categories).map((cat) => (
+          <div key={cat}>
+            <h2>{cat}</h2>
+            {renderProducts(categories[cat])}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // 🚀 Specific category
+  return (
+    <div>
+      <AllCategories categories={subCategoriseListDetails[category]}/>
+      <h1>{category}</h1>
+      {categories[category] ? (
+        renderProducts(categories[category])
+      ) : (
+        <h4>لا يتوفر {category} حاليا</h4>
+      )}
+    </div>
+  );
 };
 
 export default CategoryScreen;

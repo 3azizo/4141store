@@ -10,9 +10,11 @@ import Message from '../components/Message';
 // import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
 import TripleSlider from '../components/TripleSlider';
-import ContactLinks from '../components/concatLinks/ContactLinks';
+// import ContactLinks from '../components/concatLinks/ContactLinks';
 // 
+import { categories } from '../constants';
 import AllCategories from '../components/AllCategories';
+
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -35,15 +37,18 @@ const HomeScreen = () => {
   const isLoading = keyword ? isProductsLoading : isTopProductsLoading;
   const error = keyword ? productsError : topProductsError;
 
+    
+  console.log(products);
+  
+
   return (
     <>
       {!keyword ? (
         <>
         <TripleSlider />
         {/* <ContactLinks/> */}
-        <AllCategories/>        
+        <AllCategories categories={categories} />        
         </>
-
       ) : (
         <Link to="/" className="btn btn-light mb-4">
           رجوع
