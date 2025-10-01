@@ -50,7 +50,7 @@ export const subCategoriseList = {
   "رجالى": ["قمصان الاندية", "كاجوال", "شورت", "بنطلون", "ترنجات", "كت ودراى فيت"],
   "نسائى": ["ليجن وبنطلون", "تشيرتات وجواكت", "اكسسوارات"],
   "اطفال": ["اطقم رياضية"],
-  "احذية": ["جرى", "كرة القدم"],
+  "احذية": ["running | خروج", "كرة القدم"],
   "حراس المرمى": ["جونتات", "ملابس حراس"],
   "ادوات رياضية":["العاب"]
 };
@@ -74,7 +74,7 @@ export const subCategoriseListDetails = {
     { name: "اطقم رياضية", icon: jersey, path: "/categories/اطفال/اطقم رياضية" },
   ],
   "احذية": [
-    { name: "جرى", icon: runningShose, path: "/categories/احذية/جرى" },
+    { name: "running | خروج", icon: runningShose, path: "/categories/احذية/running | خروج" },
     { name: "كرة القدم", icon: player, path: "/categories/احذية/كرة القدم" },
   ],
   "حراس المرمى": [
